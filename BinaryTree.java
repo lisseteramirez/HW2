@@ -1,6 +1,5 @@
-
 /*
- * *** Lissete Ramirez/Section 002 ***
+ * *** LISSETE/ SECTION 002 ***
  *
  * Homework # 2 (Programming Assignment). This Java class defines a few basic
  * manipulation operations of a binary trees.
@@ -20,7 +19,7 @@ import java.util.LinkedList;
  * that each node within the tree has a degree of 0, 1, or 2. A node of degree
  * zero (0) is called a terminal node, or leaf node.
  *
- * Each non-leaf node is often called a branch node, which will have  either one or
+ * Each non-leaf node is often called a branch node, which will have either one or
  * two children (a left and right child node). There is no order guarantee within
  * this basic binary tree object. Given that this binary object is NOT a Binary Search Tree (BST), there is
  * no guarantee on order in the tree.
@@ -54,11 +53,12 @@ public class BinaryTree {
     public BinaryTree() {
         root = null;
     }
+
     public BinaryTree(Node node) {
         root = node;
     }
 
-    /* 
+    /*
      * Class Node
      *
      * The node object definition for each node of the bin ary tree.
@@ -105,11 +105,11 @@ public class BinaryTree {
 
 
     /*
-     * public method insert
+     * Public method insert
      *
      * The method will insert a node into the binary tree containing the value
      * passed in as a parameter, 'data'. This insert routine maintains the
-     * form of the binary tree which maintains teh property of a 'complete binary'
+     * form of the binary tree which maintains the property of a 'complete binary'
      * tree.
      *
      * The property basically implies that for every node in the tree:
@@ -118,7 +118,7 @@ public class BinaryTree {
      *
      * There are no order properties of a basic binary tree.
      *
-     * This method uses a breath first search of the binary tree to locate the
+     * This method uses a breath-first search of the binary tree to locate the
      * location of where to insert the new node. This approach basically starts at
      * the root, and searches level by level until the next free spot for the insertion.
      * This approach maintains the 'complete tree' property of the binary tree.
@@ -128,7 +128,7 @@ public class BinaryTree {
 
         Node tempNode = new Node(data);
 
-        // If tree is empty, insert new node as the root.
+        // If the tree is empty, insert a new node as the root.
         if (root == null)
             return root = tempNode;
 
@@ -153,7 +153,7 @@ public class BinaryTree {
                 queue.remove();
             }
 
-            // Enqueue the left and right children of teh current node
+            // Enqueue the left and right children of the current node
             if (front.left != null)
                 queue.add(front.left);
 
@@ -170,7 +170,7 @@ public class BinaryTree {
      * Public method preOrder()
      *
      * This method will generate a String object containing a copy of the tree's
-     * data values in preorder traversal format. If tree is empty, and empty
+     * data values in preorder traversal format. If the tree is empty, and empty
      * String object (e.g., "") is returned. Else the String object contains
      * the data values, separated by a space.
      *
@@ -178,7 +178,7 @@ public class BinaryTree {
      * which does the actual work. The public wrapper method simply passes the root
      * of the tree to helper method.
      */
-    
+
     public String preOrder() {
         return preOrderHelper(root);
     }
@@ -196,7 +196,7 @@ public class BinaryTree {
      *
      * YOUR CODE GOES BELOW
      *
-     * THERE IS NO NEED TO CHANGE ANY CODE ABOVE. DO NOT FORGET TO PLACE
+     * THERE IS NO NEED TO CHANGE ANY CODE ABOVE. REMEMBER TO PLACE
      * YOUR NAME AND SECTION NUMBER AT THE TOP OF THE FILE.
      *
      * YOU ARE TO WRITE THE METHODS:
@@ -209,77 +209,82 @@ public class BinaryTree {
 
 
     /*
-     * private method replaceValueHelper
+     * Private method replaceValueHelper
      *
-     * This method will traverse the tree using a depth first search
+     * This method will traverse the tree using a depth-first search
      * approach, and for each node found with the value of 'oldVal',
-     * replace it (update teh value in place), with the provided 'newVal'.
+     * replace it (update the value in place), with the provided 'newVal'.
      *
-     * Depth first search of the tree is based on recursion. This will result
+     * Depth-first search of the tree is based on recursion. This will result
      * in very few lines of code.
      *
      */
-
     private void replaceValueHelper(Node node, int oldVal, int newVal) {
-
-        // ADD YOUR CODE HERE -- USE DEPTH FIRST SEARCH OF
-        // BINARY TREE (WHICH IS BASED ON RECURSION)
-
+        if (node == null) {
+            return; //stops if current node is empty
+        }
+        if (node.data == oldVal) {
+            node.data = newVal; //will replace node's data if it equals oldVal
+        }
+        replaceValueHelper(node.left, oldVal, newVal); //applies the same process to the left node
+        replaceValueHelper(node.right, oldVal, newVal); //applies the same process to the right node
     }
 
 
     /*
-     * private method findMinHelper()
+     * Private method findMinHelper()
      *
-     * This method will traverse the tree using depth first search traversal and
+     * This method will traverse the tree using depth-first search traversal and
      * return the minimum data value in the binary tree. If the tree is empty, the
      * value 'Integer.MAX_VALUE' is returned. Recall that this is not a binary
      * search Tree (BST), so it does not have the additional property that the
      * smaller data values always traverse the left child. So that implies all
-     * node is this tree must be traversed.
+     *  nodes that this tree must be traversed.
      *
-     * Depth first search of the tree is based on recursion. This will result
+     * Depth-first search of the tree is based on recursion. This will result
      * in very few lines of code.
      */
 
     private int findMinHelper(Node node) {
-
-        // ADD YOUR CODE HERE -- USE DEPTH FIRST SEARCH OF
-        // BINARY TREE (WHICH IS BASED ON RECURSION)
-
-        return Integer.MAX_VALUE;
+        if (node == null) {
+            return Integer.MAX_VALUE; //will return max integer if the node is null
+        }
+        int leftMin = findMinHelper(node.left); //will find the minimum value in left subtree
+        int rightMin = findMinHelper(node.right); //will find the minimum value in right subtree
+        return Math.min(node.data, Math.min(leftMin, rightMin)); //will return the minimum of the current node's data
     }
 
 
     /*
-     * private method nodeGTHelper()
+     * Private method nodeGTHelper()
      *
-     * This method will traverse the tree using depth first search traversal and
+     * This method will traverse the tree using depth-first search traversal and
      * return a count on the number of nodes that contain a data value larger
      * than the parameter 'val'.
      *
      * If the tree is empty, return 0.
      *
-     * Depth first search of the tree is based on recursion. This will result
+     * Depth-first search of the tree is based on recursion. This will result
      * in very few lines of code.
      */
 
     private int nodesGTHelper(Node node, int val) {
-
-        // ADD YOUR CODE HERE -- USE DEPTH FIRST SEARCH OF
-        // BINARY TREE (WHICH IS BASED ON RECURSION)
-
-        // return -1; // RECALL, IF TREE IS EMPTY, RETURN -1
-
-
-        return -1;
+        if (node == null) {
+            return 0; //will return 0 if node is null
+        }
+        int count = 0;
+        if (node.data > val) {
+            count = 1; //will increase count if node's data greater than value
+        }
+        //will return the total count of nodes greater than value
+        return count + nodesGTHelper(node.left, val) + nodesGTHelper(node.right, val);
     }
 
 
     /*
-     * public method average()
+     * Public method average()
      *
-     * This method will traverse the tree using depth first search traversal and
+     * This method will traverse the tree using depth-first search traversal and
      * return the average value contained in the binary tree. To easily perform a depth
      * first traversal, it invokes the helper method, averageHelper(), which is the
      * method that should be called recursively. If the tree is empty, 0 should be
@@ -293,24 +298,26 @@ public class BinaryTree {
      * As can be seen in the method average() immediately below, the returned average
      * value is calculated as "sum / count".
      *
-     * Depth first search of the tree is based on recursion. This will result
+     * Depth-first search of the tree is based on recursion. This will result
      * in very few lines of code within the helper method.
      */
 
     public double average() {
-        int[] sumAndCount = averageHelper(root);
-        return (double) sumAndCount[0] / sumAndCount[1];
+        int[] sumAndCount = averageHelper(root); //calls helper method
+        return (double) sumAndCount[0] / sumAndCount[1]; //will calculate average
     }
 
     private int[] averageHelper(Node n) {
+        if (n == null) {
+            return new int[]{0, 0}; //return {0,0} if node is null
+        }
+        int[] leftResult = averageHelper(n.left); //will get sum and count from left subtree
+        int[] rightResult = averageHelper(n.right); //will get sum and count from right subtree
 
-        // ADD YOUR CODE HERE -- USE DEPTH FIRST SEARCH OF
-        // BINARY TREE (WHICH IS BASED ON RECURSION)
+        //will calculate total sum and count
+        int sum = leftResult[0] + rightResult[0] + n.data;
+        int count = leftResult[1] + rightResult[1] + 1;
 
-        // RECALL, IF THE TREE IS EMPTY, RETURN 0 FOR BOTH THE SUM AND
-        // COUNT LOCATIONS IN THE RETURNED ARRAY AS SHOWN BELOW, ELSE
-        // THE 'SUM' IS RETURNED IN INDEX LOCATION 0, AND COUNT IS LOCATION 1
-
-        return new int[]{0, 0};
+        return new int[]{sum, count}; //will return sum and count as an array
     }
 }
