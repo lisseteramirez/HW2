@@ -303,8 +303,8 @@ public class BinaryTree {
      */
 
     public double average() {
-        int[] sumAndCount = averageHelper(root); //calls helper method
-        return (double) sumAndCount[0] / sumAndCount[1]; //will calculate average
+        int[] sumAndCount = averageHelper(root);
+        return (double) sumAndCount[0] / sumAndCount[1];
     }
 
     private int[] averageHelper(Node n) {
